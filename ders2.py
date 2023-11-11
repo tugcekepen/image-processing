@@ -1,22 +1,22 @@
 import numpy as np
 import cv2
-from sklearn import preprocessing as p
-import matplotlib.pyplot as plt
 
-img = cv2.imread("sahil.JPEG")
-img = cv2.resize(img, (500, 750)) #Boyutlandırma
+'''RENK UZAYI VE DÖNÜŞÜMLERİ'''
+
+img = cv2.imread("sahil.JPEG",0)
+img = cv2.resize(img, (500, 750)) #Boyutlandırma  # dsize = (sütun, satır)
 cv2.imshow('Orijinal',img)
 
-print(img.shape)
+print(img.shape) # (satır, sütun) çıktısı veriyor
 print(img.size)
 print(img.dtype)
 
 
 '''ROTATION : Temelde bir görüntünün belirlenen bir açı kadar döndürülmesi işlemidir.'''
-# rows,cols = img.shape
-# M = cv2.getRotationMatrix2D((cols/2,rows/2),90,1)
-# rot = cv2.warpAffine(img,M,(cols,rows))
-# cv2.imshow('rotation', rot)
+rows,cols = img.shape #(750,500)
+M = cv2.getRotationMatrix2D((cols/2, rows/2), 90, 1)       # -- 
+rot = cv2.warpAffine(img,M,(cols, rows))
+cv2.imshow('rotation', rot)
 
 
 '''FLIP : Bir görüntünün yatay veya dikey olarak çevrilmesi işlemidir. Yatay ve Dikey Çevirme İşlemleri'''
@@ -35,7 +35,7 @@ print(img.dtype)
 
 
 '''PERSPEKTİF DÖNÜŞÜMÜ'''
-rows,cols,ch = img.shape
+# rows,cols,ch = img.shape
 
 # pts1 = np.float32([[40,26],[425,30],[9,445],[475,441]]) # Perspektifi alınacak çerçevenin noktaları
 # pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]]) # Perspektif ile taşınacak noktalar
@@ -80,8 +80,6 @@ elektromanyetik görünür spektrumda, fiziksel saf renkler (dalgaboyları) ile 
 '''
 
 
-
-
 '''HSV RENK UZAYI : Hue, Saturation ve Value'''
 # hsv_img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 # cv2.imshow("HSV Goruntu", hsv_img)
@@ -112,14 +110,6 @@ elektromanyetik görünür spektrumda, fiziksel saf renkler (dalgaboyları) ile 
 # cv2.imshow("l",L)
 # cv2.imshow("A",A)
 # cv2.imshow("B",B)
-
-
-'wit?'
-im1 = img.astype(float)
-c = 255 / np.log(1 + np.max(im1))
-log_img = c*np.log(1+im1)
-log_img1 = (log_img).astype(np.uint8)
-cv2.imshow("1",log_img1)
 
 
 cv2.waitKey(0)
