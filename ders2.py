@@ -1,115 +1,136 @@
 import numpy as np
 import cv2
 
-'''RENK UZAYI VE DÖNÜŞÜMLERİ'''
+A=np.array([[1,2,3],
+            [4,5,6],
+            [7,8,9]])
+print("A'nın birinci satır:",A[1])
+print("2.satırın 1.elemanı:",A[2][1])
 
-img = cv2.imread("sahil.JPEG",0)
-img = cv2.resize(img, (500, 750)) #Boyutlandırma  # dsize = (sütun, satır)
-cv2.imshow('Orijinal',img)
+print("-"*50)
 
-print(img.shape) # (satır, sütun) çıktısı veriyor
-print(img.size)
-print(img.dtype)
+A=np.array(range(9))
+B=np.array(range(9)).reshape(3,3)
+C=np.zeros((6,6),dtype="int")
+print(A)
+print(B)
+print(C)
+print(C.shape)
 
+print("-"*50)
 
-'''ROTATION : Temelde bir görüntünün belirlenen bir açı kadar döndürülmesi işlemidir.'''
-rows,cols = img.shape #(750,500)
-M = cv2.getRotationMatrix2D((cols/2, rows/2), 90, 1)       # -- 
-rot = cv2.warpAffine(img,M,(cols, rows))
-cv2.imshow('rotation', rot)
+A=np.random.randint(5,size=(4,3))
+for i in range(A.shape[0]):
+    for j in range(A.shape[1]):
+        print("A[{:},{:}] = {:}".format(i, j, A[i,j]))
 
+print("-"*50)
 
-'''FLIP : Bir görüntünün yatay veya dikey olarak çevrilmesi işlemidir. Yatay ve Dikey Çevirme İşlemleri'''
-# imgFlip = cv2.flip(img,-1)
-# cv2.imshow('Cevirme',imgFlip)
-# - Görüntüyü X ekseni çevresinde çevirmek için: 0 (Sıfır) - (dikey çevirme)
-# - Y ekseni çevresinde döndürme için: 1 - (yatay çevirme)
-# - Her iki eksenin etrafında döndürmek için: -1
+A=np.array(range(12)).reshape(4,3)
+B=A.T #TRANSPOSE
+print(A)
+print(B)
 
+print("-"*50)
 
-'''TRANSLATION : Bir görüntünün belirli bir oranda kaydırılması işlemidir. (x,y) düzleminde görüntünün (a,b) değerleri ile ötelenmesidir.'''
-# rows,cols = img.shape
-# M = np.float32([[1,0,100],[0,1,50]])
-# trans = cv2.warpAffine(img,M,(cols,rows))
-# cv2.imshow('rotation', trans)
+A=np.array(range(12)).reshape(4,3)
+B=np.zeros((3,4),dtype="int")
+for i in range(len(A)):
+    for j in range(len(A[0])):
+        B[j][i]=A[i][j]
+print(A)
+print(len(A))
+print(len(A[0]))
+print(B)
 
+print("-"*50)
 
-'''PERSPEKTİF DÖNÜŞÜMÜ'''
-# rows,cols,ch = img.shape
+A=np.random.randint(5,size=(4,3))
+B=np.random.randint(10,size=(4,3))
+toplam=A+B
+fark=A-B
+print(A)
+print(B)
+print(toplam)
+print(fark)
 
-# pts1 = np.float32([[40,26],[425,30],[9,445],[475,441]]) # Perspektifi alınacak çerçevenin noktaları
-# pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]]) # Perspektif ile taşınacak noktalar
+print("-"*50)
 
-# M = cv2.getPerspectiveTransform(pts1,pts2)
+A=np.random.randint(5,size=(4,3))
+B=np.random.randint(10,size=(4,3))
+carp=A*10
+print(A)
+print(B)
+print(carp)
 
-# per = cv2.warpPerspective(img,M,(300,300))
+print("-"*50)
 
-# plt.subplot(121),plt.imshow(img),plt.title('input')
-# plt.subplot(122),plt.imshow(per),plt.title('output')
-# plt.show()
+A=np.random.randint(5,size=(4,3))
+B=np.random.randint(4,size=(3,4))
+A=np.mat(A)
+B=np.mat(B)
+print(A*B)
 
+print("-"*50)
 
-# pts1 = np.float32([[50,50],[200,50],[50,200]])
-# pts2 =np.float32([[10,100],[200,50],[100,250]])
+A=np.random.randint(5,size=(4,3))
+B=np.random.randint(4,size=(3,4))
+result=np.zeros((5,4),dtype="int")
+for i in range(A.shape[0]):
+    for j in range(B.shape[1]):
+        for k in range(B.shape[0]):
+            result[i][j]+=A[i,k]*B[k,j]
+print(A)
+print(B)
+print(result)
 
-# M = cv2.getAffineTransform(pts1,pts2)
+print("-"*50)
 
-# per = cv2.warpAffine(img,M,(cols,rows))
+A=np.random.randint(10,size=(3,3))
+result=0
+for i in range(A.shape[0]):
+    for j in range(A.shape[1]):
+        if i==j:
+            result+=A[i,j]
+print(A)
+print(result)
 
-# plt.subplot(121),plt.imshow(img),plt.title('input')
-# plt.subplot(122),plt.imshow(per),plt.title('output')
-# plt.show()
+print("-"*50)
 
+img = cv2.imread("yatLimani.JPEG")
+img = cv2.resize(img, (500, 750)) #Boyutlandırma
+cv2.imshow("Orijinal", img)
 
-'''RESİM KIRPMA'''
-# imgCrop1 = img[0:200, 200:500] #[satırStart:satırEnd, sütunStart:sütunEnd]
-# cv2.imshow('Cropped 1',imgCrop1)
+cv2.waitKey(0)
 
-# imgCrop2=img[:100,:300]
-# cv2.imshow('Cropped 2',imgCrop2)
+# img_gri1 = cv2.imread("t-a.JPEG", 0)
+# cv2.imshow("Gri Goruntu 1", img_gri1)
 
+# img_gri2 = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+# cv2.imshow("Gri Goruntu 2", img_gri2)
 
-'''CIE'''
-'''
-Avusturya, Viyana'da 1913 yılında kurulan CIE Uluslararası Aydınlatma Komisyonu (International Commission on Illumination)
--genellikle Fransızca ismi olan 'Commission internationale de l'éclairage' adının ilk harfleri CIE şeklinde kullanılır-
-ışık, aydınlatma, renk ve renk uzayları konusunda uluslararası tek otoritedir.
+# en,boy,katman = np.shape(img)
+# gri_img = np.zeros((en,boy,katman),dtype=np.uint8)
+# for i in range(en):
+#     for j in range(boy):
+#         gri_img[i:,j] = img[i,j,0]*0.299 + img[i,j,1]*0.587 + img[i,j,2]*0.114
+# cv2.imshow("Gri Ton",gri_img)
 
-CIE 1931 renk uzayları;
-elektromanyetik görünür spektrumda, fiziksel saf renkler (dalgaboyları) ile insan renk görüşünde fiziksel algılanan renkler arasında tanımlanmış ilk sayısal oluşumdur.
-'''
+# img_gri3 = cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
+# cv2.imshow("Terse Benzer Goruntu 3", img_gri3)
 
+''' RGB bantlarıyla renklendirme '''
+r=img[:,:,2] #kırmızı kanalı
+g=img[:,:,1] #yeşil kanalı
+b=img[:,:,0] #mavi kanalı
 
-'''HSV RENK UZAYI : Hue, Saturation ve Value'''
-# hsv_img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-# cv2.imshow("HSV Goruntu", hsv_img)
-# H = hsv_img[:,:,1]
-# S = hsv_img[:,1,:]
-# V = hsv_img[1,:,:]
-# cv2.imshow("H Goruntu", H)
-# cv2.imshow("S Goruntu", S)
-# cv2.imshow("V Goruntu", V)
+cv2.imshow("kirmizi kanali", r)
+cv2.imshow("yesil kanali", g)
+cv2.imshow("mavi kanali", b)
 
-'''DİĞER RENK UZAYLARI'''
-# xyz_img = cv2.cvtColor(img,cv2.COLOR_RGB2XYZ) #Diğer bütün renk evrenlerinin temel yapısını oluşturan modeldir.
-# lab_img = cv2.cvtColor(img,cv2.COLOR_RGB2LAB) #LAB dijital ortam için renklere bir dil vermek adına geliştirilen uluslararası bir standart türüdür. L aydınlık (Lightness) A ile B ise renk bileşenlerini temsil eder.
-# ycbcr_img = cv2.cvtColor(img,cv2.COLOR_RGB2YCrCb)
-# X = xyz_img[:,:,1]
-# Y = xyz_img[:,1,:]
-# Z = xyz_img[1,:,:]
-# L = lab_img[:,:,1]
-# A = lab_img[:,1,:]
-# B = lab_img[1,:,:]
+# gbr_img = cv2.merge((g,b,r))
+# #!!!!!!!!!!!!!!!!!!!!!
 
-# cv2.imshow("xyz",xyz_img)
-# cv2.imshow("lab",lab_img)
-# cv2.imshow("ycbcr",ycbcr_img)
-# cv2.imshow("X",X)
-# cv2.imshow("Y",Y)
-# cv2.imshow("Z",Z)
-# cv2.imshow("l",L)
-# cv2.imshow("A",A)
-# cv2.imshow("B",B)
-
+# cv2.imshow('GBR channel', gbr_img)
 
 cv2.waitKey(0)

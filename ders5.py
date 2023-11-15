@@ -3,8 +3,8 @@ import cv2
 from sklearn import preprocessing as p
 import matplotlib.pyplot as plt
 
-img = cv2.imread("cimen.JPEG")
-img = cv2.resize(img, (500, 750)) #Boyutlandırma
+img = cv2.imread("yatLimani.JPEG")
+img = cv2.resize(img, (300, 500)) #Boyutlandırma
 cv2.imshow('Orijinal',img)
 
 
@@ -14,6 +14,11 @@ cv2.imshow('Orijinal',img)
 # im1 = (img-mn)/(mx-mn)
 # cv2.imshow("Kontrast Germe-1",im1)
 
+def rescale(foto):
+    foto.astype(float)
+    foto -= np.min(foto)
+    foto /= np.max(foto)
+    return (255*foto).astype(np.uint8)
 
 
 '''----YOĞUNLUK DÖNÜŞÜMLERİ----'''
@@ -45,8 +50,26 @@ cv2.imshow('Orijinal',img)
 # log_img1=(log_img).astype(np.uint8)
 # cv2.imshow("LOG Image-1",log_img1)
 
+def log_donusumu(r, c):
+    r = r.astype(float)
+    s = c * np.log(1 + r)
+    s = rescale(s)
+    return s
 
-'''GAMMA DÜZELTME'''  # 𝑠 = 𝐿 − 1 × 𝑟^𝛾
+# log_foto1 = log_donusumu(img, 1)
+# log_foto2 = log_donusumu(img, 5)
+
+# yan_yana_gosterim = np.hstack((log_foto1, log_foto2))
+
+# cv2.imshow("Log", yan_yana_gosterim)
+
+# print(np.max(img[700:750,50:100]))
+# print(np.min(img[700:750,50:100]))
+# print(np.max(log_foto1[700:750,50:100]))
+# print(np.min(log_foto1[700:750,50:100]))
+
+
+'''GAMMA DÜZELTME'''  # 𝑠 = c × 𝑟^𝛾
 '''
 • Gama < 1 ise: daha parlak çıktı değerlerine göre ağırlıklandırılır.
 • Gama = 1 ise (varsayılan): eşleme doğrusaldır.
@@ -56,6 +79,23 @@ cv2.imshow('Orijinal',img)
 # gamma_corrected = np.array(255*(img / 255) ** gamma, dtype = 'uint8')
 # cv2.imshow('log_image-3', gamma_corrected)
 
+def kuvvet_donusumu(r, c, gamma):
+    r = r.astype(float)
+    s = c * (r ** gamma)
+    s = rescale(s)
+    return s
+
+# gamma_degerleri = [1, 0.6, 0.2]
+# kuvvet_fotograflari = []
+
+# for gamma in gamma_degerleri:
+#     kuvvet_fotograflari.append(kuvvet_donusumu(img, 1, gamma))
+
+# satir1 = np.hstack((img, kuvvet_fotograflari[0]))
+# satir2 = np.hstack((kuvvet_fotograflari[1], kuvvet_fotograflari[2]))
+# yan_yana_gosterim = np.vstack((satir1, satir2))
+
+# cv2.imshow("KUVVET", yan_yana_gosterim)
 
 
 '''BİT DÜZELTME''' # 𝑠 = 𝑟 / 2^𝑏
