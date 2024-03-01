@@ -9,10 +9,10 @@ cv2.imshow('Orijinal',img)
 
 
 '''KONTRAST GERME'''
-# mn = np.min(img)
-# mx = np.max(img)
-# im1 = (img-mn)/(mx-mn)
-# cv2.imshow("Kontrast Germe-1",im1)
+mn = np.min(img)
+mx = np.max(img)
+im1 = (img-mn)/(mx-mn)
+cv2.imshow("Kontrast Germe-1",im1)
 
 def rescale(foto):
     foto.astype(float)

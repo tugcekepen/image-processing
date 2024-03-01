@@ -55,6 +55,20 @@ elektromanyetik görünür spektrumda, fiziksel saf renkler (dalgaboyları) ile 
 # COLOR_RGB2HLS
 # COLOR_RGB2YUV
 # YIQ Renk Uzayı
+# [[Y],
+#  [I],
+#  [Q]] = [[0.299, 0.587, 0.114],
+#          [0.596, -0.274, -0.322],
+#          [0.211, -0.523, 0.312]] * [[R],
+#                                     [G],
+#                                     [B]]
+# [[R],
+#  [G],
+#  [B]] = [[1, 0.956, 0.621],
+#          [1, -0.272, -0.647],
+#          [1, -1.106, 1.703]] * [[Y],
+#                                 [I],
+#                                 [Q]]
 # COLORMAP
 
 
